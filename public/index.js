@@ -5,36 +5,23 @@ console.log('Please follow the prompts')
 
 // import packages
 const inquirer = require('inquirer');
-const fs = require('fs');
 const Department = require('../lib/Department');
 const Roles = require('../lib/Roles');
 const Employee = require('../lib/Employee');
 const cTable = require('console.table');
-console.table([
-    {
-      name: 'foo',
-      age: 10
-    }, {
-      name: 'bar',
-      age: 20
-    }
-  ]);
-
-// const sequelize = require('sequelize'
+const mysql = require('mysql2')
 
 
-const listOfDepts = {}
-const listOfRoles = {}
-const listOfEmployees = {}
+
 
 const dbConnect = mysql.createConnection(
     {
       host: 'localhost',
       // MySQL username,
-      user: process.env.DB_USER,
+      user: 'root',
       // MySQL password
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME
+      password: 'dorothy',
+      database: 'business_db'
     },
     console.log(`Connected to the business_db database.`)
   );
@@ -66,6 +53,7 @@ function pickAction() {
       }
 
     ])
+    // Matching the choice to the correct function to add, view, update, etc.
     .then((results) => { 
         switch(results.action) {
             case "View Department": addRole();
@@ -123,9 +111,15 @@ function addRole() {
         }
 
     ])
-    .then ((answers) => console.log('Answers:', answers) )   
-        const query = 'INSERT INTO roles (title, salary) VALUES() '; 
-        dbConnect.query(answers.title, answers.salary)
+    .then ((answers) => { console.log('Answers:', answers)      
+        const query = `INSERT INTO roles (title, salary) VALUES (?, ?)` 
+        dbConnect.query(query, [answers.title, answers.salary], (err, res) => {
+            console.table("Result", res)
+        })
+        console.table("Here", query);
+        }
+    )
+        
         
   
 }

@@ -82,22 +82,32 @@ function pickAction() {
 
 
 function addDept() {
-    let newDept = '';
+
     inquirer.prompt([
         {
             type: "input",
-            name: "deptName",
+            name: "name",
             message: "What is the name of the Department?",
         }
     ])   
-    
-    newDept = new Department(deptName)
-    listOfDepts.push(newDept)
+    .then ((answers) => { console.log('Answers:', answers)      
+        const query = `INSERT INTO department (name) VALUES (?)` 
+        dbConnect.query(query, [answers.name], (err, res) => {
+            if(err) {
+                console.error(err)
+            }
+            console.table("Result", res)
+            console.table("Here", answers);
+        })
+      
+        }
+    )
+        
+        
 }
 
 
 function addRole() {
-    let newRole = '';
     inquirer.prompt([
         {
             type: "input",
@@ -109,18 +119,26 @@ function addRole() {
             name: "salary",
             message: "What is the salary for the role?",
         }
+        
+    
 
     ])
-    .then ((answers) => { console.log('Answers:', answers)      
-        const query = `INSERT INTO roles (title, salary) VALUES (?, ?)` 
-        dbConnect.query(query, [answers.title, answers.salary], (err, res) => {
-            console.table("Result", res)
-        })
-        console.table("Here", query);
-        }
-    )
+        .then ((answers) => { console.log('Answers:', answers)      
+            const query = `INSERT INTO roles (title, salary) VALUES (?, ?)` 
+            dbConnect.query(query, [answers.title, answers.salary], (err, res) => {
+                if(err) {
+                    console.error(err)
+                }
+                console.table("Result", res)
+                console.table("Here", answers);
+                addDept();
+            
+            })
         
+            }
+        )
         
+
   
 }
 

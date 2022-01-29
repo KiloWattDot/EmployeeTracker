@@ -8,6 +8,8 @@ const inquirer = require('inquirer');
 const cTable = require('console.table');
 const mysql = require('mysql2')
 
+console.log(``)
+
 
 
 
@@ -88,7 +90,7 @@ function addDept() {
         }
     ])   
     .then ((answers) => { console.log('Answers:', answers)      
-        const query = `INSERT INTO department (name) VALUES (?)` 
+        const query = `INSERT INTO departments (name) VALUES (?)` 
         dbConnect.query(query, [answers.name], (err, res) => {
             if(err) {
                 console.error(err)
@@ -121,7 +123,7 @@ function addRole() {
 
     ])
         .then ((answers) => { console.log('Answers:', answers)      
-            const query = `INSERT INTO roles (title, salary) VALUES (?, ?)` 
+            const query = `INSERT INTO roles (id, title, salary) VALUES (?, ?)` 
             dbConnect.query(query, [answers.title, answers.salary], (err, res) => {
                 if(err) {
                     console.error(err)
@@ -129,6 +131,9 @@ function addRole() {
                 console.table("Result", res)
                 console.table("Here", answers);
                 addDept();
+    
+
+         
             
             })
         

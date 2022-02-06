@@ -33,9 +33,9 @@ function pickAction() {
         name: "action",
         message: "Would like to :",
         choices: [
-          "View Department",
-          "View Role",
-          "View Employee",
+          "View Departments",
+          "View Roles",
+          "View Employees",
           "Add Department",
           "Add Role",
           "Add Employee",
@@ -46,14 +46,14 @@ function pickAction() {
     // Matching the choice to the correct function to add, view, update, etc.
     .then((results) => {
       switch (results.action) {
-        case "View Department":
-          addRole();
+        case "View Departments":
+          viewDepts();
           break;
-        case "View Role":
-          console.log("Viewing Role");
+        case "View Roles":
+            viewRoles()
           break;
-        case "View Employee":
-          console.log("Viewing Employee");
+        case "View Employees":
+            viewEmployees()
           break;
         case "Add Department":
           addDept();
@@ -62,7 +62,7 @@ function pickAction() {
           addRole();
           break;
         case "Add Employee":
-          roles();
+          fetchRoles();
           break;
         default:
           console.log("Please select one of the options.");
@@ -72,6 +72,70 @@ function pickAction() {
     });
 }
 
+
+// ========================================================= View Functions ==============================================================
+
+function viewDepts() {
+    const query = `SELECT * FROM departments`;
+    dbConnect.query(query, (err, depts) => {
+        if (err) { 
+            console.log(err)
+        
+        }
+        console.table("All Departments:", depts)
+       
+    })
+    return setTimeout(() => {
+        console.log("Back to Main menu...")
+        pickAction()
+    }, 5000)
+    
+   
+}
+
+
+function viewRoles() {
+    const query = `SELECT * FROM roles`;
+    dbConnect.query(query, (err, roles) => {
+        if (err) { 
+            console.log(err)
+        
+        }
+        console.table("All Roles:", roles)
+
+    })
+    return setTimeout(() => {
+        console.log("Back to Main menu...")
+        pickAction()
+    }, 3000)
+    
+}
+
+
+function viewEmployees() {
+    const query = `SELECT * FROM employees`;
+    dbConnect.query(query, (err, employees) => {
+        if (err) { 
+            console.log(err)
+        
+        }
+        console.table("All Employees:", employees)
+
+    })
+    return setTimeout(() => {
+        console.log("Back to Main menu...")
+        pickAction()
+    }, 3000)
+    
+   
+}
+
+
+
+
+
+
+// ========================================================= ADD Functions ==============================================================
 function addDept() {
   inquirer
     .prompt([
@@ -91,7 +155,16 @@ function addDept() {
         console.table("Result", res);
         console.table("Here", answers);
       });
-    });
+    }).then(() => {
+        setTimeout(() => {
+        console.log("Back to Main menu...")
+        pickAction()
+
+        }, 3000)
+    })
+
+
+    
 }
 
 function addRole() {
@@ -137,11 +210,21 @@ function addRole() {
             console.table("Here", answers);
           }
         );
-      });
-  });
+      }).then(() => {
+        setTimeout(() => {
+        console.log("Back to Main menu...")
+        pickAction()
+
+            }, 3000)
+         
+        })
+    })
+
+
+
 }
 
-function roles() {
+function fetchRoles() {
   const query = `SELECT title FROM roles`;
   const newRoles = [];
   dbConnect.query(query, (err, roles) => {
@@ -161,9 +244,9 @@ function roles() {
 
   return setTimeout(() => {
     addEmployee(newRoles)
-    console.log(newRoles)
+    // console.log(newRoles)
 }, 2000)
-}
+}   
 
 
 function addEmployee(employeeRoles) {
@@ -189,13 +272,11 @@ function addEmployee(employeeRoles) {
       {
         type: "input",
         name: "manager_id",
-        message: "Who is the manager for the role?",
+        message: "What is the id of the manager for this employee?",
       },
     ])
     .then((answers) => {
-      console.log("Answers:", answers);
-      let roleID = answers.role_id.charAt(answers.role_id.length - 1)
-      console.log('roleNum:', roleID)
+      const roleID = answers.role_id.charAt(answers.role_id.length - 1)
       const query = `INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)`;
       dbConnect.query(
         query,
@@ -203,7 +284,7 @@ function addEmployee(employeeRoles) {
           answers.first_name,
           answers.last_name,
           +roleID,
-          +answers.manager_id,
+          answers.manager_id,
         ],
         (err, res) => {
           if (err) {
@@ -213,7 +294,19 @@ function addEmployee(employeeRoles) {
           console.table("Here", answers);
         }
       );
-    });
+    }).then(() => {
+        setTimeout(() => {
+        console.log("Back to Main menu...")
+        pickAction()
+
+         }, 3000)
+         
+
+    })
+
+
+   
+    
 }
 
 init();

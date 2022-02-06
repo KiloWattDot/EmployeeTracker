@@ -12,9 +12,6 @@ VALUES (001, "Data Scientist", 95000, 4),
 
 
 
-
-
-
        
 
 

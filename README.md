@@ -5,7 +5,7 @@
   https://www.youtube.com/watch?v=DuMvVdqq-V4
   
   ## Description
-  This is a project where SQL is used to keep a database of a company's information regarding all depts, roles, employees, and all the other information that correlates. With this program, you can access information down to the everyone working for the company. This can be used for tracking information for a compan's use.
+  This is a project where SQL is used to keep a database of a company's information regarding all depts, roles, employees, and all the other information that correlates. With this program, you can access information down to everyone working for the company. This can be used for tracking information for a company's use.
 
   ## Table of Contents
   * [ Description](#description)

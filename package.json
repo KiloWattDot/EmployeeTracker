@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/KiloWattDot/EmployeeTracker#readme",
   "dependencies": {
+    "cli-color": "^2.0.1",
     "console.table": "^0.10.0",
     "dotenv": "^14.3.2",
     "express": "^4.17.2",

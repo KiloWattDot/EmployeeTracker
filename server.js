@@ -6,6 +6,11 @@ console.log("Please follow the prompts");
 const inquirer = require("inquirer");
 const cTable = require("console.table");
 const mysql = require("mysql2");
+var clc = require("cli-color");
+
+
+
+
 
 console.log(``);
 
@@ -31,7 +36,7 @@ function pickAction() {
       {
         type: "list",
         name: "action",
-        message: "Would like to :",
+        message: "Would you like to :",
         choices: [
           "View Departments",
           "View Roles",
@@ -39,7 +44,6 @@ function pickAction() {
           "Add Department",
           "Add Role",
           "Add Employee",
-          // "Update Employee"
         ],
       },
     ])
@@ -77,18 +81,22 @@ function pickAction() {
 
 function viewDepts() {
     const query = `SELECT * FROM departments`;
+  
+    
     dbConnect.query(query, (err, depts) => {
         if (err) { 
             console.log(err)
         
         }
-        console.table("All Departments:", depts)
-       
+   
+       console.table("All Departments:", depts)
+  
+
     })
     return setTimeout(() => {
-        console.log("Back to Main menu...")
+        console.log(clc.black.bgWhite.underline("Back to Main menu..."))
         pickAction()
-    }, 5000)
+    }, 3000)
     
    
 }
@@ -96,6 +104,7 @@ function viewDepts() {
 
 function viewRoles() {
     const query = `SELECT * FROM roles`;
+    const log = console.log;
     dbConnect.query(query, (err, roles) => {
         if (err) { 
             console.log(err)
@@ -166,6 +175,7 @@ function addDept() {
 
     
 }
+
 
 function addRole() {
   // Changed the "id" to be named "value" for inquirer
@@ -312,3 +322,4 @@ function addEmployee(employeeRoles) {
 init();
 
 // Program End
+

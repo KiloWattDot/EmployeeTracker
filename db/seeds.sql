@@ -11,7 +11,6 @@ VALUES (001, "Data Scientist", 95000, 4),
        (004, "Director of Sales", 120000, 1);
 
 
-
        
 
 

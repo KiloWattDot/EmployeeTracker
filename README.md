@@ -1,5 +1,6 @@
 # EmployeeTracker
   https://github.com/KiloWattDot/EmployeeTracker
+  https://youtu.be/HW8GzEExbAg
   
   ## Description
   This is a project where SQL is used to keep a database of a company's information regarding all depts, roles, employees, and all the other information that correlates. With this program, you can access information down to the everyone working for the company. This can be used for tracking information for a compan's use.
